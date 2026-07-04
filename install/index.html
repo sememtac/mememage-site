@@ -149,7 +149,7 @@
     document.getElementById("cards").prepend(card);          // float to top
     var b = document.createElement("span");
     b.className = "badge"; b.textContent = "you";
-    card.querySelector(".os").appendChild(b);
+    card.querySelector(".os").parentNode.appendChild(b);   // after .meta, not between os/.exe
     document.getElementById("rec").textContent = "Recommended for your system";
     // Emphasize the one-liner that matches the visitor's OS; fade the others.
     document.querySelectorAll('#oneliner .block[data-os]').forEach(function (el) {
