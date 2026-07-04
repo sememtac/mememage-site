@@ -51,6 +51,10 @@
     border-top:1px solid var(--line);padding-top:20px;}
   footer a{color:var(--dim);}
   footer a:hover{color:var(--fg);}
+  /* Embedded in the product page's install modal (same-origin iframe): read as a
+     panel, not a page — tighten the top and drop the footer nav. */
+  html.embedded .wrap{padding:30px 26px 34px;}
+  html.embedded footer{display:none;}
 </style>
 </head>
 <body>
@@ -110,6 +114,11 @@
 
 <script>
   (function () {
+    // In the product page's install modal we're a same-origin iframe — flag it
+    // so the CSS above collapses to a panel.
+    try { if (window.self !== window.top) document.documentElement.classList.add("embedded"); }
+    catch (e) { document.documentElement.classList.add("embedded"); }
+
     var uad = navigator.userAgentData && navigator.userAgentData.platform;
     var p = (uad || navigator.platform || navigator.userAgent || "").toLowerCase();
     var os = /mac|iphone|ipad/.test(p) ? "mac"

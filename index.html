@@ -82,6 +82,17 @@ mememage.<span class="ck">verify</span>(<span class="cs">"photo.png"</span>, res
   <img class="lightbox-img" id="heroLightboxImg" src="" alt="the genesis conception, full resolution">
 </div>
 
+<!-- Install shadowbox — the pip CTA opens /install in a same-origin iframe so
+     visitors get the download options without leaving the page. The CTA stays a
+     real /install link (no-JS + cmd-click open the page). iframe is lazy: its
+     src is set on first open. -->
+<div class="install-modal" id="installModal" hidden>
+  <div class="install-modal-card">
+    <button class="install-modal-close" id="installModalClose" type="button" aria-label="Close">&times;</button>
+    <iframe id="installFrame" title="Install Mememage" data-src="/install/" loading="lazy"></iframe>
+  </div>
+</div>
+
 <script src="js/theme.js"></script>
 <script src="js/rng.js"></script>
 <script src="js/cosmic-starfield.js"></script>
@@ -129,6 +140,38 @@ mememage.<span class="ck">verify</span>(<span class="cs">"photo.png"</span>, res
   box.addEventListener('click', close);
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !box.hidden) close();
+  });
+})();
+
+// Install shadowbox: the pip CTA opens /install in an overlay iframe, so the
+// visitor never leaves mememage.art. Plain left-clicks open the modal; modified
+// clicks (cmd/ctrl/shift/alt/middle) fall through to the real /install link.
+(function () {
+  var cta = document.querySelector('.cta-code');
+  var modal = document.getElementById('installModal');
+  var frame = document.getElementById('installFrame');
+  var closeBtn = document.getElementById('installModalClose');
+  if (!cta || !modal || !frame) return;
+  // Escape mememage.css's `body > *` position:relative (same as the lightbox).
+  document.documentElement.appendChild(modal);
+  function open() {
+    if (!frame.src) frame.src = frame.getAttribute('data-src');
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+  cta.addEventListener('click', function (e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    open();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.hidden) close();
   });
 })();
 </script>
