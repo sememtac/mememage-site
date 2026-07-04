@@ -33,6 +33,8 @@
   .brand svg{width:26px;height:26px;border-radius:3px;flex:none;}
   h1{font-size:25px;font-weight:600;margin:0;letter-spacing:-.4px;}
   .sub{color:var(--dim);margin:4px 0 44px;font-size:14px;}
+  .sub code{font-size:13px;}
+  .app-lead{margin:2px 0 18px;}
   .rec{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.16em;margin:0 0 13px;}
   .cards{display:grid;gap:11px;}
   .card{display:flex;align-items:center;justify-content:space-between;gap:16px;
@@ -74,41 +76,46 @@
     </svg>
     <h1>Install Mememage Provenance</h1>
   </div>
-  <p class="sub">Mint server and full web UI in one app — no Python needed.</p>
+  <p class="sub">The <code>mememage</code> library for your own code, or the full Provenance app.</p>
 
-  <p class="rec" id="rec">Choose your platform</p>
-  <div class="cards" id="cards">
-    <div class="card" data-os="mac">
-      <div><span class="os">macOS</span><span class="meta">Apple Silicon · .app</span></div>
-      <a class="dl" href="https://github.com/sememtac/mememage-provenance/releases/latest/download/Mememage-Provenance-macOS.zip">Download</a>
-    </div>
-    <div class="card" data-os="win">
-      <div><span class="os">Windows</span><span class="meta">.exe</span></div>
-      <a class="dl" href="https://github.com/sememtac/mememage-provenance/releases/latest/download/Mememage-Provenance-Windows.exe">Download</a>
-    </div>
-    <div class="card" data-os="linux">
-      <div><span class="os">Linux</span><span class="meta">x86-64 binary</span></div>
-      <a class="dl" href="https://github.com/sememtac/mememage-provenance/releases/latest/download/Mememage-Provenance-Linux">Download</a>
-    </div>
-  </div>
-  <p class="note">Unsigned &mdash; a <b style="color:var(--fg);font-weight:500">direct download</b> needs
-    one manual unblock: macOS <b style="color:var(--fg);font-weight:500">System&nbsp;Settings &rarr;
-    Privacy&nbsp;&amp;&nbsp;Security &rarr; Open&nbsp;Anyway</b>; Windows
-    <b style="color:var(--fg);font-weight:500">More&nbsp;info &rarr; Run&nbsp;anyway</b>. One-line
-    installs skip it.</p>
-
-  <section id="oneliner">
-    <p class="rec">One-line install &middot; no security prompt</p>
-    <div class="block" data-os="mac linux"><code><span class="cc">$ </span>curl -fsSL https://mememage.art/install.sh | bash</code></div>
-    <div class="block" data-os="win"><code><span class="cc">PS&gt; </span>irm https://mememage.art/install.ps1 | iex</code></div>
-    <p class="note">Downloads, installs, and launches &mdash; no Gatekeeper or SmartScreen.
-      Script downloads aren&rsquo;t flagged like browser ones.</p>
-  </section>
-
+  <!-- Library first — the dependency, and the developer entry point. -->
   <section>
     <p class="rec">Developers &middot; the library</p>
-    <div class="block"><code><span class="cc"># encode &middot; decode &middot; verify, in your own code
+    <div class="block"><code><span class="cc"># encode &middot; decode &middot; verify in your own code
 </span><span class="cc">$ </span>pip install mememage</code></div>
+  </section>
+
+  <!-- The full app — Python-free download, built on the library above. -->
+  <section>
+    <p class="sub app-lead">The app: mint server and full web UI &mdash; no Python needed.</p>
+    <p class="rec" id="rec">Choose your platform</p>
+    <div class="cards" id="cards">
+      <div class="card" data-os="mac">
+        <div><span class="os">macOS</span><span class="meta">Apple Silicon &middot; .app</span></div>
+        <a class="dl" href="https://github.com/sememtac/mememage-provenance/releases/latest/download/Mememage-Provenance-macOS.zip">Download</a>
+      </div>
+      <div class="card" data-os="win">
+        <div><span class="os">Windows</span><span class="meta">.exe</span></div>
+        <a class="dl" href="https://github.com/sememtac/mememage-provenance/releases/latest/download/Mememage-Provenance-Windows.exe">Download</a>
+      </div>
+      <div class="card" data-os="linux">
+        <div><span class="os">Linux</span><span class="meta">x86-64 binary</span></div>
+        <a class="dl" href="https://github.com/sememtac/mememage-provenance/releases/latest/download/Mememage-Provenance-Linux">Download</a>
+      </div>
+    </div>
+    <p class="note">Unsigned &mdash; a <b style="color:var(--fg);font-weight:500">direct download</b> needs
+      one manual unblock: macOS <b style="color:var(--fg);font-weight:500">System&nbsp;Settings &rarr;
+      Privacy&nbsp;&amp;&nbsp;Security &rarr; Open&nbsp;Anyway</b>; Windows
+      <b style="color:var(--fg);font-weight:500">More&nbsp;info &rarr; Run&nbsp;anyway</b>. One-line
+      installs skip it.</p>
+
+    <section id="oneliner">
+      <p class="rec">One-line install &middot; no security prompt</p>
+      <div class="block" data-os="mac linux"><code><span class="cc">$ </span>curl -fsSL https://mememage.art/install.sh | bash</code></div>
+      <div class="block" data-os="win"><code><span class="cc">PS&gt; </span>irm https://mememage.art/install.ps1 | iex</code></div>
+      <p class="note">Downloads, installs, and launches &mdash; no Gatekeeper or SmartScreen.
+        Script downloads aren&rsquo;t flagged like browser ones.</p>
+    </section>
   </section>
 
   <footer>
