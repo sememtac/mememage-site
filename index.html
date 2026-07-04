@@ -155,7 +155,9 @@ mememage.<span class="ck">verify</span>(<span class="cs">"photo.png"</span>, res
   // Escape mememage.css's `body > *` position:relative (same as the lightbox).
   document.documentElement.appendChild(modal);
   function open() {
-    if (!frame.src) frame.src = frame.getAttribute('data-src');
+    // Cache-bust so the modal always shows the current /install (Pages serves it
+    // with a 10-min max-age, which otherwise leaves a stale panel after a deploy).
+    if (!frame.src) frame.src = frame.getAttribute('data-src') + '?t=' + Date.now();
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
   }
