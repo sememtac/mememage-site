@@ -19,6 +19,13 @@
   body{margin:0;background:var(--bg);color:var(--fg);
     font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
     line-height:1.6;-webkit-font-smoothing:antialiased;}
+  /* Themed scrollbar — matches the dark panel (webkit + firefox). */
+  ::-webkit-scrollbar{width:10px;height:10px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px;
+    border:2px solid var(--bg);}
+  ::-webkit-scrollbar-thumb:hover{background:#3a3a48;}
+  html{scrollbar-width:thin;scrollbar-color:var(--line) transparent;}
   .wrap{max-width:680px;margin:0 auto;padding:60px 24px 90px;}
   a{color:var(--cyc);text-decoration:none;}
   a:hover{text-decoration:underline;}
