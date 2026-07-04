@@ -63,6 +63,7 @@ mememage.<span class="ck">verify</span>(<span class="cs">"photo.png"</span>, res
       <a id="linkFeed" href="#">Feed</a>
       <a id="linkDecoder" href="#">Decoder</a>
       <a id="linkValidator" href="#">Validator</a>
+      <a id="linkDiscord" href="#" target="_blank" rel="noopener">Discord</a>
     </div>
     <div class="product-foot-links product-foot-source">
       <!-- Source. Private until launch (these 404 for now); public at go-live so
@@ -105,6 +106,7 @@ mememage.<span class="ck">verify</span>(<span class="cs">"photo.png"</span>, res
 (function () {
   var soulsOrigin = 'https://souls.mememage.art';
   var feedOrigin = 'https://mint.mememage.art';
+  var discordInvite = 'https://discord.gg/3NXaFNNBxh';   // single source — swap to a vanity link here
   try {
     if (window.MEMEMAGE_SOULS_BASE) soulsOrigin = new URL(window.MEMEMAGE_SOULS_BASE).origin;
   } catch (e) {}
@@ -113,6 +115,7 @@ mememage.<span class="ck">verify</span>(<span class="cs">"photo.png"</span>, res
   set('linkFeed', feedOrigin + '/');
   set('linkDecoder', soulsOrigin + '/');
   set('linkValidator', soulsOrigin + '/validator');
+  set('linkDiscord', discordInvite);
 })();
 
 // Hero image → full-res lightbox (examine the image; no navigation). Reads the
