@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 #
-# mememage.art/install — one-line desktop install for the Mememage app.
+# mememage.art/install.sh — one-line desktop install for the Mememage app.
+# (mememage.art/install is the human download page; this is the pipe target.)
 #
-#   curl -fsSL https://mememage.art/install | bash
+#   curl -fsSL https://mememage.art/install.sh | bash
 #
 # Pulls the right build from the latest GitHub release and drops it in place.
 # No Python needed — the app bundles the mint server and the full web UI.
