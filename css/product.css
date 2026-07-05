@@ -306,8 +306,13 @@
 .product-fineprint { margin-top: 2.2rem; font-size: 0.72rem; color: #5a5a70; }
 
 @media (max-width: 600px) {
+  .product-wrap { padding: 0 1.15rem 5rem; }   /* a touch more content width */
   .tri, .cc-grid { grid-template-columns: 1fr; }
   .product-tagline { font-size: 1.15rem; }
+  .product-sub { font-size: 0.88rem; }
+  /* Wrap the code instead of clipping the inline comments off the right edge. */
+  .code-block { padding: 0.9rem 0.95rem; }
+  .code-block pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 0.68rem; }
   .prove { flex-direction: column; gap: 0.1rem; }
   .prove b { min-width: 0; }
 }
