@@ -147,14 +147,14 @@
   border: 0;
   border-radius: 50%;
   background: rgba(20, 20, 28, 0.85);
-  color: #cfcfda;
+  color: #dcc83c;
   font-size: 17px;
   line-height: 30px;
   text-align: center;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
 }
-.install-modal-close:hover { background: #3cc8dc; color: #0a0a0f; }
+.install-modal-close:hover { background: #dcc83c; color: #0a0a0f; }
 
 .cta-row {
   display: flex;
