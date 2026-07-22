@@ -71,7 +71,10 @@
   display: block;
   width: auto;
   max-width: min(88vw, 19rem);
-  max-height: 27rem;
+  /* Sized so the mechanism cards + the Python/JavaScript cards clear the fold.
+     This max-height is the dial: raise it for a bigger hero, lower it to lift the
+     language cards higher. */
+  max-height: 16rem;
   /* Square — never round the genesis image's corners; the M/Y/C bar runs edge
      to edge along the bottom and a radius would clip it. */
   border-radius: 0;
@@ -84,7 +87,10 @@
   box-shadow: 0 20px 58px rgba(0, 0, 0, 0.6);
 }
 /* The genesis image leads the hero — its own centered block above the CTA. */
-.product-hero-figure { text-align: center; margin: 0.2rem 0 0.9rem; }
+.product-hero-figure { text-align: center; margin: 0.2rem 0 0.8rem; }
+/* Mechanism section leads straight off the hero — tighten its top so the ecosystem
+   cards below stay near the fold. */
+.mechanism-section { padding: 0.4rem 0 1rem; }
 
 /* Lightbox — examine the hero image full-res on a dimmed backdrop. */
 .lightbox {
@@ -227,7 +233,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.9rem;
-  margin-top: 1.4rem;
+  margin-top: 0.9rem;
 }
 .tri-cell {
   border: 1px solid rgba(255,255,255,0.07);
