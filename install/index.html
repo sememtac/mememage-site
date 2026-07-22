@@ -49,6 +49,15 @@
   .dl{background:var(--accent);color:#0a0a0f;padding:8px 17px;border-radius:7px;
     font-weight:600;font-size:13px;white-space:nowrap;}
   .dl:hover{text-decoration:none;filter:brightness(1.09);}
+  /* Per-card SHA-256 — filled from the GitHub release API on load, click to copy. */
+  .card-l{display:flex;flex-direction:column;gap:5px;min-width:0;}
+  .sha{display:none;align-items:baseline;gap:7px;background:none;border:0;padding:0;margin:0;
+    font-family:inherit;color:var(--dim);text-align:left;cursor:pointer;}
+  .sha.on{display:flex;}
+  .sha-k{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);flex:none;}
+  .sha-v{font-size:11px;color:#a7a7b4;word-break:break-all;line-height:1.35;}
+  .sha:hover .sha-v{color:var(--fg);}
+  .sha.copied .sha-v{color:var(--accent);}
   section{margin-top:42px;}
   .block{background:var(--code);border:1px solid var(--line);border-radius:9px;
     padding:14px 17px;margin:0;overflow-x:auto;font-size:13.5px;transition:opacity .15s;}
@@ -97,15 +106,24 @@
     <p class="rec" id="rec">Choose your platform</p>
     <div class="cards" id="cards">
       <div class="card" data-os="mac">
-        <div><span class="os">macOS</span><span class="meta">.app</span></div>
+        <div class="card-l">
+          <div><span class="os">macOS</span><span class="meta">.app</span></div>
+          <button class="sha" type="button" data-asset="Mememage-Provenance-macOS.zip" title="Click to copy the SHA-256"><span class="sha-k">SHA-256</span><span class="sha-v"></span></button>
+        </div>
         <a class="dl" href="https://github.com/sememtac/mememage-provenance/releases/latest/download/Mememage-Provenance-macOS.zip">Download</a>
       </div>
       <div class="card" data-os="win">
-        <div><span class="os">Windows</span><span class="meta">.exe</span></div>
+        <div class="card-l">
+          <div><span class="os">Windows</span><span class="meta">.exe</span></div>
+          <button class="sha" type="button" data-asset="Mememage-Provenance-Windows.exe" title="Click to copy the SHA-256"><span class="sha-k">SHA-256</span><span class="sha-v"></span></button>
+        </div>
         <a class="dl" href="https://github.com/sememtac/mememage-provenance/releases/latest/download/Mememage-Provenance-Windows.exe">Download</a>
       </div>
       <div class="card" data-os="linux">
-        <div><span class="os">Linux</span><span class="meta">binary</span></div>
+        <div class="card-l">
+          <div><span class="os">Linux</span><span class="meta">binary</span></div>
+          <button class="sha" type="button" data-asset="Mememage-Provenance-Linux" title="Click to copy the SHA-256"><span class="sha-k">SHA-256</span><span class="sha-v"></span></button>
+        </div>
         <a class="dl" href="https://github.com/sememtac/mememage-provenance/releases/latest/download/Mememage-Provenance-Linux">Download</a>
       </div>
     </div>
@@ -123,12 +141,10 @@
     </section>
 
     <section id="verify">
-      <p class="rec">Verify your download</p>
-      <p class="note">The one-line installs check the SHA-256 checksum automatically before running. For a direct download, compare it against
-        <a href="https://github.com/sememtac/mememage-provenance/releases/latest/download/SHA256SUMS.txt">SHA256SUMS.txt</a> &mdash; print the file's hash and match it to the line for your file:</p>
-      <div class="block" data-os="mac linux"><code><span class="cc"># prints the SHA-256 of the file you downloaded</span>
-shasum -a 256 Mememage-Provenance-macOS.zip</code></div>
-      <div class="block" data-os="win"><code>(Get-FileHash Mememage-Provenance-Windows.exe -Algorithm SHA256).Hash</code></div>
+      <p class="rec">Verify a direct download</p>
+      <p class="note">The one-line installs check the SHA-256 automatically. For a direct download, compare the SHA-256 shown above to your file:</p>
+      <div class="block" data-os="mac linux"><code>shasum -a 256 Mememage-Provenance-macOS.zip</code></div>
+      <div class="block" data-os="win"><code>Get-FileHash Mememage-Provenance-Windows.exe</code></div>
     </section>
   </section>
 
@@ -166,6 +182,36 @@ shasum -a 256 Mememage-Provenance-macOS.zip</code></div>
       var applies = el.getAttribute("data-os").split(" ").indexOf(os) !== -1;
       el.style.opacity = applies ? "1" : "0.4";
     });
+  })();
+
+  // Show the SHA-256 for each build, fetched live from the GitHub release API
+  // (CORS-allowed; the per-asset digest is authoritative and always matches the
+  // current release). Click a hash to copy it. Offline / API down → the hash is
+  // just omitted and the "verify a direct download" command still applies.
+  (function () {
+    var API = "https://api.github.com/repos/sememtac/mememage-provenance/releases/latest";
+    fetch(API, { headers: { "Accept": "application/vnd.github+json" } })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (rel) {
+        var by = {};
+        (rel.assets || []).forEach(function (a) {
+          if (a.digest && a.digest.indexOf("sha256:") === 0) by[a.name] = a.digest.slice(7);
+        });
+        document.querySelectorAll(".sha").forEach(function (el) {
+          var h = by[el.getAttribute("data-asset")];
+          if (!h) return;
+          el.querySelector(".sha-v").textContent = h;
+          el.classList.add("on");
+          el.addEventListener("click", function () {
+            if (!(navigator.clipboard && navigator.clipboard.writeText)) return;
+            navigator.clipboard.writeText(h).then(function () {
+              el.classList.add("copied");
+              setTimeout(function () { el.classList.remove("copied"); }, 1200);
+            }, function () {});
+          });
+        });
+      })
+      .catch(function () {});
   })();
 </script>
 </body>
