@@ -69,12 +69,11 @@
 }
 .product-hero-img {
   display: block;
-  width: auto;
-  max-width: min(88vw, 19rem);
-  /* Sized so the mechanism cards + the Python/JavaScript cards clear the fold.
-     This max-height is the dial: raise it for a bigger hero, lower it to lift the
-     language cards higher. */
-  max-height: 18rem;
+  /* Width matched to the "See live examples" button so the image and the CTA align.
+     The genesis image is a tall portrait, so its height follows from this width. */
+  width: 12.4rem;
+  max-width: 88vw;
+  height: auto;
   /* Square — never round the genesis image's corners; the M/Y/C bar runs edge
      to edge along the bottom and a radius would clip it. */
   border-radius: 0;
