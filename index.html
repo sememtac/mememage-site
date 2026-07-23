@@ -90,9 +90,11 @@
         <span class="eco-lname">Python</span><span class="eco-lcmd">pip install mememage</span>
       </button>
       <button class="eco-lang" data-l="js" type="button">
-        <span class="eco-licon"><svg viewBox="0 0 24 24">
-          <rect fill="#CB3837" x="1" y="6.5" width="22" height="11" rx="1.4"/>
-          <path fill="#fff" d="M3.4 8.9v6.2h3.05v-4.7h1.5v4.7h1.5V8.9zM10.55 8.9v7.7h3.05v-1.5h3.05V8.9zm3.05 1.5h1.5v3.1h-1.5zM17.55 8.9v6.2h1.5v-4.7h1.5v4.7h1.55V8.9z"/>
+        <span class="eco-licon"><svg viewBox="-1 -6.5 20 20">
+          <path fill="#CB3837" d="M0,0h18v6H9v1H5V6H0V0z M1,5h2V2h1v3h1V1H1V5z M6,1v5h2V5h2V1H6z M8,2h1v2H8V2z M11,1v4h2V2h1v3h1V2h1v3h1V1H11z"/>
+          <polygon fill="#fff" points="1,5 3,5 3,2 4,2 4,5 5,5 5,1 1,1"/>
+          <path fill="#fff" d="M6,1v5h2V5h2V1H6z M9,4H8V2h1V4z"/>
+          <polygon fill="#fff" points="11,1 11,5 13,5 13,2 14,2 14,5 15,5 15,2 16,2 16,5 17,5 17,1"/>
         </svg></span>
         <span class="eco-lname">JavaScript</span><span class="eco-lcmd">npm install mememage</span>
       </button>
@@ -242,15 +244,22 @@
   };
   var DATA = {
     py: { title: 'Built on Python', al: '#4B8BBE', items: [
-      { ic:'mm', nm:'mememage', tag:'library', ds:'The core: encode · decode · verify · unlock. Pure Python, no dependencies.', link:'https://pypi.org/project/mememage/' },
-      { ic:'comfy', nm:'mememage-comfy', tag:'nodes', ds:'Encode and Decode nodes. Stamp a verifiable bar as you generate an image.', link:'https://registry.comfy.org/nodes/mememage-comfy' },
-      { ic:'mm', nm:'Mememage Provenance', tag:'desktop app', ds:'The reference app and mint server. Runs on macOS, Windows, and Linux.', link:'/install/', install:true }
+      { ic:'mm', nm:'mememage', tag:'library', ds:'The core: encode · decode · verify · unlock. Pure Python, no dependencies.',
+        release:{ label:'PyPI', url:'https://pypi.org/project/mememage/' }, git:'https://github.com/sememtac/mememage' },
+      { ic:'comfy', nm:'mememage-comfy', tag:'nodes', ds:'Encode and Decode nodes. Stamp a verifiable bar as you generate an image.',
+        release:{ label:'ComfyUI', url:'https://registry.comfy.org/nodes/mememage-comfy' }, git:'https://github.com/sememtac/mememage-comfy' },
+      { ic:'mm', nm:'Mememage Provenance', tag:'desktop app', ds:'The reference app and mint server. Runs on macOS, Windows, and Linux.',
+        release:{ label:'Download', install:true }, git:'https://github.com/sememtac/mememage-provenance' }
     ]},
     js: { title: 'Built on JavaScript', al: '#CB3837', items: [
-      { ic:'mm', nm:'mememage', tag:'SDK', ds:'The JavaScript SDK: decode · verify · encode. Matches the Python core.', link:'https://www.npmjs.com/package/mememage' },
-      { ic:'mm', nm:'mememage-detector', tag:'library', ds:'Find every marked image on a page and track it. Works with any framework.', link:'https://www.npmjs.com/package/mememage-detector' },
-      { ic:'mm', nm:'mememage-resolver', tag:'library', ds:'Resolve an identifier to its record across mirrors. Verify it by hash.', link:'https://www.npmjs.com/package/mememage-resolver' },
-      { ic:'chrome', nm:'Chrome extension', tag:'extension', ds:'Find and verify marked images as you browse.', link:'https://github.com/sememtac/mememage-chrome' }
+      { ic:'mm', nm:'mememage', tag:'SDK', ds:'The JavaScript SDK: decode · verify · encode. Matches the Python core.',
+        release:{ label:'npm', url:'https://www.npmjs.com/package/mememage' }, git:'https://github.com/sememtac/mememage-js' },
+      { ic:'mm', nm:'mememage-detector', tag:'library', ds:'Find every marked image on a page and track it. Works with any framework.',
+        release:{ label:'npm', url:'https://www.npmjs.com/package/mememage-detector' }, git:'https://github.com/sememtac/mememage-detector' },
+      { ic:'mm', nm:'mememage-resolver', tag:'library', ds:'Resolve an identifier to its record across mirrors. Verify it by hash.',
+        release:{ label:'npm', url:'https://www.npmjs.com/package/mememage-resolver' }, git:'https://github.com/sememtac/mememage-resolver' },
+      { ic:'chrome', nm:'Chrome extension', tag:'extension', ds:'Find and verify marked images as you browse.',
+        release:null, git:'https://github.com/sememtac/mememage-chrome' }
     ]}
   };
   var wall = document.getElementById('ecoWall'),
@@ -264,14 +273,24 @@
     panel.style.setProperty('--al', d.al);
     title.textContent = d.title;
     rows.innerHTML = d.items.map(function (x) {
-      // The install item opens the /install shadowbox in place; the rest open in a new tab.
-      var attrs = x.install ? ' data-install="1"' : ' target="_blank" rel="noopener"';
-      return '<a class="eco-row" href="' + esc(x.link) + '"' + attrs + '>'
+      // Each item shows two links: its release page + its GitHub source. The Provenance
+      // "Download" opens the /install shadowbox in place; the rest are external. An item
+      // with no release (e.g. the extension, still in store review) shows GitHub only.
+      var links = '';
+      if (x.release) {
+        var rel = x.release.install ? ' href="/install/" data-install="1"'
+                                    : ' href="' + esc(x.release.url) + '" target="_blank" rel="noopener"';
+        links += '<a class="eco-link"' + rel + '>' + esc(x.release.label) + ' ↗</a>';
+      }
+      links += '<a class="eco-link" href="' + esc(x.git) + '" target="_blank" rel="noopener">GitHub ↗</a>';
+      return '<li class="eco-row">'
         + '<span class="eco-ic">' + ICON[x.ic] + '</span>'
-        + '<span class="eco-body"><span class="eco-h"><span class="eco-nm">' + esc(x.nm)
-        + '</span><span class="eco-tag">' + esc(x.tag) + '</span></span>'
-        + '<span class="eco-ds">' + esc(x.ds) + '</span></span>'
-        + '<span class="eco-go">&rarr;</span></a>';
+        + '<span class="eco-body">'
+        + '<span class="eco-h"><span class="eco-nm">' + esc(x.nm) + '</span><span class="eco-tag">' + esc(x.tag) + '</span></span>'
+        + '<span class="eco-ds">' + esc(x.ds) + '</span>'
+        + '<span class="eco-links">' + links + '</span>'
+        + '</span>'
+        + '</li>';
     }).join('');
   }
   wall.addEventListener('click', function (e) {
@@ -287,9 +306,10 @@
     render(b.dataset.l);
     panel.classList.add('open');           // expand (or swap content if already open)
   });
-  // The Provenance row opens the install shadowbox; modified clicks fall through to /install.
+  // The Provenance "Download" link opens the install shadowbox in place; the rest are
+  // ordinary links.
   rows.addEventListener('click', function (e) {
-    var a = e.target.closest('a[data-install]'); if (!a) return;
+    var inst = e.target.closest('a[data-install]'); if (!inst) return;
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
     if (window.openInstallModal) { e.preventDefault(); window.openInstallModal(); }
   });

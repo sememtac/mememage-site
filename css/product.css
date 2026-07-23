@@ -367,7 +367,7 @@
   transition: max-height 0.36s ease, opacity 0.3s ease, margin-top 0.36s ease, border-color 0.3s ease;
 }
 .eco-panel.open {
-  max-height: 500px; opacity: 1; margin-top: 1.6rem;
+  max-height: 640px; opacity: 1; margin-top: 1.6rem;
   border-color: rgba(255,255,255,0.08);
 }
 .eco-head {
@@ -378,8 +378,8 @@
 .eco-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--al); }
 .eco-rows { list-style: none; margin: 0; padding: 0.4rem; }
 .eco-row {
-  display: flex; gap: 0.85rem; align-items: center; padding: 0.7rem 0.8rem;
-  border-radius: 8px; text-decoration: none; color: inherit; transition: background 0.18s;
+  display: flex; gap: 0.85rem; align-items: flex-start; padding: 0.7rem 0.8rem;
+  border-radius: 8px; transition: background 0.18s;
 }
 .eco-row:hover { background: rgba(255,255,255,0.03); }
 .eco-ic { width: 27px; height: 27px; flex: 0 0 auto; }
@@ -392,8 +392,14 @@
   border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 0.08rem 0.5rem;
 }
 .eco-ds { font-size: 0.72rem; color: #9a9ab0; margin-top: 0.2rem; }
-.eco-go { color: #6a6a82; font-size: 0.8rem; transition: color 0.18s, transform 0.18s; flex: 0 0 auto; }
-.eco-row:hover .eco-go { color: var(--al); transform: translateX(2px); }
+/* Release + source links, always shown under the item. */
+.eco-links { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+.eco-link {
+  font-size: 0.68rem; color: var(--al); text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 0.2rem 0.7rem;
+  transition: background 0.15s, border-color 0.15s;
+}
+.eco-link:hover { background: rgba(255,255,255,0.05); border-color: var(--al); }
 
 @media (max-width: 560px) {
   .eco-lang { width: calc(50% - 0.5rem); padding: 1.1rem; }
