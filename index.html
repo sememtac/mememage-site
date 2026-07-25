@@ -275,7 +275,7 @@
     rows.innerHTML = d.items.map(function (x) {
       // Each item shows two links: its release page + its GitHub source. The Provenance
       // "Download" opens the /install shadowbox in place; the rest are external. An item
-      // with no release (e.g. the extension, still in store review) shows GitHub only.
+      // with no release page shows GitHub only.
       var links = '';
       if (x.release) {
         var rel = x.release.install ? ' href="/install/" data-install="1"'
