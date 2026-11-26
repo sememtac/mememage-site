@@ -61,7 +61,7 @@
       </button>
     </div>
     <div class="cta-row">
-      <a class="cta cta-gold" id="ctaTry" href="feed">See live examples &rarr;</a>
+      <a class="cta cta-gold" id="ctaTry" href="#">See live examples &rarr;</a>
     </div>
   </header>
 
@@ -112,9 +112,9 @@
     <div class="product-foot-links">
       <!-- The live surfaces + community. Source now lives on each package's own home
            (the ecosystem selector above) and on the install page's GitHub link. -->
-      <a id="linkFeed" href="feed">Feed</a>
-      <a id="linkDecoder" href="decoder">Decoder</a>
-      <a id="linkValidator" href="validator">Validator</a>
+      <a id="linkFeed" href="#">Feed</a>
+      <a id="linkDecoder" href="#">Decoder</a>
+      <a id="linkValidator" href="#">Validator</a>
       <a id="linkDiscord" href="#" target="_blank" rel="noopener">Discord</a>
     </div>
     <p class="product-fineprint">Mememage is an image encoding technique. The ecosystem above is built on it.</p>
@@ -144,12 +144,22 @@
 <script src="js/starfield.js"></script>
 <script src="js/typewriter.js"></script>
 <script>
-// The feed, decoder and validator live beside this page on mememage.art, so
-// their links are plain relative hrefs in the HTML (crawlers follow them).
+// "See live examples" → the FEED (a wall of minted images; it carries a decoder
+// link so visitors find their way). Defaults to the production souls/mint
+// subdomains; overridable via window.MEMEMAGE_SOULS_BASE.
 (function () {
+  var soulsOrigin = 'https://souls.mememage.art';
+  var feedOrigin = 'https://mint.mememage.art';
   var discordInvite = 'https://discord.gg/3NXaFNNBxh';   // single source — swap to a vanity link here
-  var el = document.getElementById('linkDiscord');
-  if (el) el.href = discordInvite;
+  try {
+    if (window.MEMEMAGE_SOULS_BASE) soulsOrigin = new URL(window.MEMEMAGE_SOULS_BASE).origin;
+  } catch (e) {}
+  function set(id, href) { var el = document.getElementById(id); if (el) el.href = href; }
+  set('ctaTry', feedOrigin + '/');               // See it work → the feed
+  set('linkFeed', feedOrigin + '/');
+  set('linkDecoder', soulsOrigin + '/');
+  set('linkValidator', soulsOrigin + '/validator');
+  set('linkDiscord', discordInvite);
 })();
 
 // Hero image → full-res lightbox (examine the image; no navigation). Reads the
