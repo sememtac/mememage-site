@@ -7,7 +7,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mememage.art/</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-11-25</lastmod>
+  </url>
+  <url>
+    <loc>https://mememage.art/decoder</loc>
+    <lastmod>2026-11-25</lastmod>
+  </url>
+  <url>
+    <loc>https://mememage.art/validator</loc>
+    <lastmod>2026-11-25</lastmod>
+  </url>
+  <url>
+    <loc>https://mememage.art/feed</loc>
+    <lastmod>2026-11-25</lastmod>
   </url>
   <url>
     <loc>https://mememage.art/install/</loc>
